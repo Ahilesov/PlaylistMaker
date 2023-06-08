@@ -1,18 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/blue_background"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/frame_16dp"
+    android:paddingTop="@dimen/frame_14dp"
+    android:paddingRight="@dimen/frame_16dp"
+    android:paddingBottom="@dimen/frame_28dp">
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:fontFamily="@font/yandex_sans_text_medium"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_22" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="@font/yandex_sans_text_medium"
+            android:insetTop="@dimen/inset_button_0dp"
+            android:insetBottom="@dimen/inset_button_0dp"
+            android:text="@string/main_button1_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/text_22"
+            app:cornerRadius="@dimen/radius_button_16dp"
+            app:icon="@drawable/search"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:iconTint="@color/black_text" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="@font/yandex_sans_text_medium"
+            android:insetTop="@dimen/inset_button_0dp"
+            android:insetBottom="@dimen/inset_button_0dp"
+            android:text="@string/main_button2_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/text_22"
+            app:cornerRadius="@dimen/radius_button_16dp"
+            app:icon="@drawable/media"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:iconTint="@color/black_text" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="@font/yandex_sans_text_medium"
+            android:insetTop="@dimen/inset_button_0dp"
+            android:insetBottom="@dimen/inset_button_0dp"
+            android:text="@string/main_button3_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/text_22"
+            app:cornerRadius="@dimen/radius_button_16dp"
+            app:icon="@drawable/settings"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:iconTint="@color/black_text" />
+
+    </LinearLayout>
+
+    <!--ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"/-->
+
+</LinearLayout>
