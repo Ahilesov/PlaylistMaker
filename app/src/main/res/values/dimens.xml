@@ -3,8 +3,10 @@
     <dimen name="frame_14dp">14dp</dimen>
     <dimen name="frame_28dp">28dp</dimen>
     <dimen name="frame_16dp">16dp</dimen>
-    <dimen name="frame_61dp">61dp</dimen>
-    <dimen name="inset_button_0dp">0dp</dimen>
+    <dimen name="frame_61dp">62dp</dimen>
+    <dimen name="frame_10dp">10dp</dimen>
+    <dimen name="frame_0dp">0dp</dimen>
+    <dimen name="frame_40dp">40dp</dimen>
     <dimen name="radius_button_16dp">16dp</dimen>
     <dimen name="text_22">22sp</dimen>
     <dimen name="text_16">16sp</dimen>

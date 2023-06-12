@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/frame_16dp"
+    android:layout_marginTop="@dimen/frame_14dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/frame_16dp"
-        android:layout_marginTop="@dimen/frame_14dp"
-        android:layout_marginRight="@dimen/frame_16dp"
+
         android:orientation="horizontal">
 
         <ImageView
@@ -34,9 +34,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/frame_61dp"
-        android:layout_marginLeft="@dimen/frame_16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="@dimen/frame_16dp"
+        android:layout_marginTop="@dimen/frame_40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -58,9 +56,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/frame_61dp"
-        android:layout_marginLeft="@dimen/frame_16dp"
-        android:layout_marginRight="@dimen/frame_16dp">
+        android:layout_height="@dimen/frame_61dp">
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -81,9 +78,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/frame_61dp"
-        android:layout_marginLeft="@dimen/frame_16dp"
-        android:layout_marginRight="@dimen/frame_16dp">
+        android:layout_height="@dimen/frame_61dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,9 +99,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/frame_61dp"
-        android:layout_marginLeft="@dimen/frame_16dp"
-        android:layout_marginRight="@dimen/frame_16dp">
+        android:layout_height="@dimen/frame_61dp">
 
         <TextView
             android:layout_width="wrap_content"

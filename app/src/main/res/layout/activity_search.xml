@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/frame_16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/frame_16dp"
         android:layout_marginTop="@dimen/frame_14dp"
-        android:layout_marginRight="@dimen/frame_16dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -25,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/frame_28dp"
             android:fontFamily="@font/yandex_sans_text_medium"
-            android:text="@string/main_button1_name"
+            android:text="@string/button_search"
             android:textColor="@color/black_text"
             android:textSize="@dimen/text_22" />
 
