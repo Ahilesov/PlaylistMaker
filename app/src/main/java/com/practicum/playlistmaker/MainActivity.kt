@@ -3,13 +3,18 @@ package com.practicum.playlistmaker
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
 import android.widget.Button
+
+
+import android.widget.TextView
 
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         val buttonSearch = findViewById<Button>(R.id.button_search)
         val buttonMedia = findViewById<Button>(R.id.button_media)
@@ -29,6 +34,9 @@ class MainActivity : AppCompatActivity() {
             val displayIntent = Intent(this, MediaActivity::class.java)
             startActivity(displayIntent)
         }
+
+        val text = findViewById<TextView>(R.id.text)
+
 
 
     }
