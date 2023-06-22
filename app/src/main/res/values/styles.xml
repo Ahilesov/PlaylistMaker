@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LinearLayoutApp">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingHorizontal">@dimen/frame_16dp</item>
+        <item name="android:paddingTop">@dimen/frame_14dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="TextScreenNameApp">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/yandex_sans_text_medium</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_22</item>
+    </style>
+
+    <style name="TextScreenName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/yandex_sans_text_medium</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textSize">@dimen/text_22</item>
+    </style>
+
+    <style name="ButtonApp">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/frame_0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:fontFamily">@font/yandex_sans_text_medium</item>
+        <item name="android:insetTop">@dimen/frame_0dp</item>
+        <item name="android:insetBottom">@dimen/frame_0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:textColor">@color/black_text</item>
+        <item name="android:textSize">@dimen/text_22</item>
+        <item name="cornerRadius">@dimen/text_16</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/frame_10dp</item>
+        <item name="iconTint">@color/black_text</item>
+    </style>
+    
+    <style name="ImageButtonArrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/frame_4dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <!--Styles activity_settings-->
+
+    <style name="MenuItemSettings">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/frame_62dp</item>
+    </style>
+
+    <style name="TextButtonSettings">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">start|center_vertical</item>
+        <item name="android:fontFamily">@font/yandex_sans_text_regular</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:textSize">@dimen/frame_16dp</item>
+    </style>
+    
+    <style name="IconsMenuSettings">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">end|center_vertical</item>
+    </style>
+
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/blue_background</item>
+        <item name="colorSwitchThumbNormal">@color/grey_icons</item>
+        <item name="android:colorForeground">@color/grey_icons</item>
+    </style>
+
+
+
+
+</resources>
