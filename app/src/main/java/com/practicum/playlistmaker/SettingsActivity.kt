@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 
 class SettingsActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)

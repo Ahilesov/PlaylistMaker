@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/frame_16dp"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/LinearLayoutApp"
+    android:background="?attr/colorPrimaryVariant">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/frame_14dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -17,10 +15,48 @@
             android:src="@drawable/arrow" />
 
         <TextView
+            style="@style/TextScreenName"
             android:layout_marginStart="@dimen/frame_28dp"
-            android:text="@string/button_search"
-            style="@style/TextScreenName"/>
+            android:text="@string/button_search" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="@dimen/frame_28dp"
+        android:background="@drawable/layout_bg"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/inputEditText"
+            android:layout_width="@dimen/frame_0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_bg"
+            android:drawableStart="@drawable/search_icon"
+            android:drawablePadding="@dimen/frame_8dp"
+            android:hint="@string/button_search"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="@dimen/frame_10dp"
+            android:textColor="@color/black_text"
+            android:textColorHint="?attr/colorSecondaryVariant"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="@dimen/text_16" />
+
+        <ImageView
+            android:id="@+id/clearIcon"
+            android:layout_width="@dimen/frame_20dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/frame_16dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:visibility="gone"
+            app:tint="@color/black_text"/>
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

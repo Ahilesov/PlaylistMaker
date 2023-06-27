@@ -10,6 +10,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/black_text</item>
         <item name="colorSecondaryVariant">@color/grey_icons</item>
+        <item name="colorOnSecondary">@color/grey_light</item>
 
     </style>
 

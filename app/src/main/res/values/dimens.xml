@@ -2,13 +2,15 @@
 <resources>
     <dimen name="frame_14dp">14dp</dimen>
     <dimen name="frame_28dp">28dp</dimen>
+    <dimen name="frame_20dp">20dp</dimen>
     <dimen name="frame_16dp">16dp</dimen>
+    <dimen name="frame_8dp">8dp</dimen>
+    <dimen name="frame_36dp">36dp</dimen>
     <dimen name="frame_62dp">62dp</dimen>
     <dimen name="frame_10dp">10dp</dimen>
     <dimen name="frame_0dp">0dp</dimen>
     <dimen name="frame_40dp">40dp</dimen>
     <dimen name="frame_4dp">4dp</dimen>
-    <dimen name="radius_button_16dp">16dp</dimen>
     <dimen name="text_22">22sp</dimen>
     <dimen name="text_16">16sp</dimen>
 

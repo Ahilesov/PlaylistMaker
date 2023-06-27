@@ -36,7 +36,7 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:textColor">@color/black_text</item>
         <item name="android:textSize">@dimen/text_22</item>
-        <item name="cornerRadius">@dimen/text_16</item>
+        <item name="cornerRadius">@dimen/frame_16dp</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">@dimen/frame_10dp</item>
         <item name="iconTint">@color/black_text</item>
