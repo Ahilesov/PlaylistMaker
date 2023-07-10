@@ -13,16 +13,18 @@ import android.view.inputmethod.InputMethodManager
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var inputEditText: EditText
+    private lateinit var backButton: ImageView
+    private lateinit var clearButton: ImageView
     companion object {
-        const val SEARCH_TEXT = "SEARCH_TEXT"
+        private const val SEARCH_TEXT = "SEARCH_TEXT"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val backButton = findViewById<ImageView>(R.id.back)
+        backButton = findViewById<ImageView>(R.id.back)
         inputEditText = findViewById<EditText>(R.id.inputEditText)
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
+        clearButton = findViewById<ImageView>(R.id.clearIcon)
 
         backButton.setOnClickListener{
             finish()
@@ -34,13 +36,12 @@ class SearchActivity : AppCompatActivity() {
             inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
         }
 
-        val simpleTextWatcher = object : TextWatcher {
+        val simpleTextWatcher = object : TextWatcher { // ввод текста в строку поиска
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // реализация позже
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 clearButton.visibility = clearButtonVisibility(s)
             }
 
@@ -52,19 +53,19 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.addTextChangedListener(simpleTextWatcher)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) { // сохраняем данные
         super.onSaveInstanceState(outState)
         val searchText = inputEditText.text.toString()
         outState.putString(SEARCH_TEXT, searchText)
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) { // показываем созранненые данные
         super.onRestoreInstanceState(savedInstanceState)
         val searchText = savedInstanceState.getString(SEARCH_TEXT)
         inputEditText.setText(searchText)
     }
 
-    private fun clearButtonVisibility(s: CharSequence?): Int {
+    private fun clearButtonVisibility(s: CharSequence?): Int { //функция показа крестика очистка строки поиска
         return if (s.isNullOrEmpty()) {
             View.GONE
         } else {

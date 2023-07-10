@@ -25,7 +25,7 @@
         <item name="android:textSize">@dimen/text_22</item>
     </style>
 
-    <style name="ButtonApp">
+    <style name="ButtonApp" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/frame_0dp</item>
         <item name="android:layout_weight">1</item>
