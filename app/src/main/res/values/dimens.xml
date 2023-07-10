@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="frame_14dp">14dp</dimen>
-    <dimen name="frame_28dp">28dp</dimen>
-    <dimen name="frame_20dp">20dp</dimen>
-    <dimen name="frame_16dp">16dp</dimen>
-    <dimen name="frame_8dp">8dp</dimen>
-    <dimen name="frame_36dp">36dp</dimen>
-    <dimen name="frame_62dp">62dp</dimen>
-    <dimen name="frame_10dp">10dp</dimen>
     <dimen name="frame_0dp">0dp</dimen>
-    <dimen name="frame_40dp">40dp</dimen>
+    <dimen name="frame_2dp">2dp</dimen>
     <dimen name="frame_4dp">4dp</dimen>
-    <dimen name="text_22">22sp</dimen>
-    <dimen name="text_16">16sp</dimen>
+    <dimen name="frame_6dp">6dp</dimen>
+    <dimen name="frame_8dp">8dp</dimen>
+    <dimen name="frame_10dp">10dp</dimen>
+    <dimen name="frame_12dp">12dp</dimen>
+    <dimen name="frame_14dp">14dp</dimen>
+    <dimen name="frame_16dp">16dp</dimen>
+    <dimen name="frame_18dp">18dp</dimen>
+    <dimen name="frame_20dp">20dp</dimen>
+    <dimen name="frame_24dp">24dp</dimen>
+    <dimen name="frame_28dp">28dp</dimen>
+    <dimen name="frame_34dp">34dp</dimen>
+    <dimen name="frame_35dp">35dp</dimen>
+    <dimen name="frame_36dp">36dp</dimen>
+    <dimen name="frame_40dp">40dp</dimen>
+    <dimen name="frame_44dp">44dp</dimen>
+    <dimen name="frame_54dp">54dp</dimen>
+    <dimen name="frame_62dp">62dp</dimen>
+    <dimen name="frame_66dp">66dp</dimen>
 
+    <dimen name="text_22sp">22sp</dimen>
+    <dimen name="text_16sp">16sp</dimen>
+    <dimen name="text_11sp">11sp</dimen>
 
 
 </resources>
