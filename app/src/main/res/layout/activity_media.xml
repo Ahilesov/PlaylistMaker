@@ -24,7 +24,7 @@
             android:fontFamily="@font/yandex_sans_text_medium"
             android:text="@string/button_media"
             android:textColor="@color/black_text"
-            android:textSize="@dimen/text_22" />
+            android:textSize="@dimen/text_22sp" />
 
     </LinearLayout>
 

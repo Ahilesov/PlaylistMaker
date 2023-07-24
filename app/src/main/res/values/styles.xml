@@ -14,7 +14,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/yandex_sans_text_medium</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/text_22</item>
+        <item name="android:textSize">@dimen/text_22sp</item>
     </style>
 
     <style name="TextScreenName">
@@ -22,7 +22,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/yandex_sans_text_medium</item>
         <item name="android:textColor">?attr/colorSecondary</item>
-        <item name="android:textSize">@dimen/text_22</item>
+        <item name="android:textSize">@dimen/text_22sp</item>
     </style>
 
     <style name="ButtonApp" parent="Widget.MaterialComponents.Button.UnelevatedButton">
@@ -35,7 +35,7 @@
         <item name="android:insetBottom">@dimen/frame_0dp</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:textColor">@color/black_text</item>
-        <item name="android:textSize">@dimen/text_22</item>
+        <item name="android:textSize">@dimen/text_22sp</item>
         <item name="cornerRadius">@dimen/frame_16dp</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">@dimen/frame_10dp</item>
@@ -77,7 +77,22 @@
         <item name="android:colorForeground">@color/grey_icons</item>
     </style>
 
+    <!--Styles track_item-->
+    <style name="TextNameTrack">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/text_16sp</item>
+        <item name="android:fontFamily">@font/yandex_sans_text_regular</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+    </style>
 
+    <style name="TextNameArtistAndTime">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/text_11sp</item>
+        <item name="android:fontFamily">@font/yandex_sans_text_regular</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
 
 
 </resources>
