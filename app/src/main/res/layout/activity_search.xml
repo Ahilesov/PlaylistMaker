@@ -38,9 +38,11 @@
             android:drawableStart="@drawable/search_icon"
             android:drawablePadding="@dimen/frame_8dp"
             android:hint="@string/button_search"
+            android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1"
             android:padding="@dimen/frame_10dp"
+            android:singleLine="true"
             android:textColor="@color/black_text"
             android:textColorHint="?attr/colorSecondaryVariant"
             android:textCursorDrawable="@drawable/color_cursor"
@@ -59,19 +61,83 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/errorNotFound"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/text_16sp"
-        tools:context=".SearchActivity">
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTrack"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/error_nothing_was_found" />
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="15"
-            tools:listitem="@layout/track_item" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/frame_8dp"
+            android:layout_marginTop="@dimen/frame_16dp"
+            android:fontFamily="@font/yandex_sans_text_medium"
+            android:text="@string/error_not_found"
+            android:textAlignment="center"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="@dimen/text_19sp" />
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTrack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/frame_14dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="15"
+        tools:listitem="@layout/track_item"
+        android:visibility="gone"/>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/errorConnection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/error_connection" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/frame_8dp"
+            android:layout_marginTop="@dimen/frame_16dp"
+            android:fontFamily="@font/yandex_sans_text_medium"
+            android:text="@string/error_connection"
+            android:textAlignment="center"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="@dimen/text_19sp" />
+
+        <Button
+            android:id="@+id/button_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/text_16sp"
+            android:backgroundTint="?attr/colorSecondary"
+            android:text="@string/refresh"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="@dimen/text_14sp" />
+
 
     </LinearLayout>
 
