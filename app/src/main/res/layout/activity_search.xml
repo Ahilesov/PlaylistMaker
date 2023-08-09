@@ -11,7 +11,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/back"
+            android:id="@+id/ivBack"
             style="@style/ImageButtonArrow"
             android:src="@drawable/arrow" />
 
@@ -49,7 +49,7 @@
             android:textSize="@dimen/text_16sp" />
 
         <ImageView
-            android:id="@+id/clearIcon"
+            android:id="@+id/ivClearIcon"
             android:layout_width="@dimen/frame_20dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
@@ -61,7 +61,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/errorNotFound"
+        android:id="@+id/llErrorNotFound"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
@@ -94,16 +94,14 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/frame_14dp"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="15"
-        tools:listitem="@layout/track_item"
-        android:visibility="gone"/>
-
-
+        tools:listitem="@layout/track_item" />
 
 
     <LinearLayout
-        android:id="@+id/errorConnection"
+        android:id="@+id/llErrorConnection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
@@ -128,7 +126,7 @@
             android:textSize="@dimen/text_19sp" />
 
         <Button
-            android:id="@+id/button_refresh"
+            android:id="@+id/buttonRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -138,6 +136,45 @@
             android:textColor="?attr/colorPrimaryVariant"
             android:textSize="@dimen/text_14sp" />
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/frame_28dp"
+            android:fontFamily="@font/yandex_sans_text_medium"
+            android:text="@string/you_were_looking_for"
+            android:textAlignment="center"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="@dimen/text_19sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/track_item" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/text_16sp"
+            android:backgroundTint="?attr/colorSecondary"
+            android:fontFamily="@font/yandex_sans_text_medium"
+            android:text="@string/сlear_history"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="@dimen/text_14sp" />
 
     </LinearLayout>
 

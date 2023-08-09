@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/back"
+            android:id="@+id/ivBack"
             style="@style/ImageButtonArrow"
             android:src="@drawable/arrow" />
 
