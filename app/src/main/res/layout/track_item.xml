@@ -15,48 +15,55 @@
         android:layout_gravity="center_vertical"
         tools:src="@drawable/michaeljackaon" />
 
-    <TextView
-        android:id="@+id/tvName_track"
-        style="@style/TextNameTrack"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/frame_54dp"
         android:layout_marginTop="@dimen/frame_14dp"
         android:layout_marginEnd="@dimen/frame_24dp"
-        tools:text="Название трека" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/frame_54dp"
-        android:layout_marginTop="@dimen/frame_35dp"
-        android:layout_marginEnd="@dimen/frame_24dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvName_artist"
-            style="@style/TextNameArtistAndTime"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="Название артиста" />
-
-        <ImageView
+            android:id="@+id/tvName_track"
+            style="@style/TextNameTrack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingHorizontal="@dimen/frame_4dp"
-            android:src="@drawable/baseline_circle_24"
-            app:tint="?attr/colorOnPrimary" />
+            tools:text="Название трека" />
 
-        <TextView
-            android:id="@+id/tvTime_track"
-            style="@style/TextNameArtistAndTime"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="4:01" />
+            android:orientation="horizontal"
+            android:layout_marginTop="1dp">
+
+            <TextView
+                android:id="@+id/tvName_artist"
+                style="@style/TextNameArtistAndTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="Название артиста" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingHorizontal="@dimen/frame_4dp"
+                android:src="@drawable/baseline_circle_24"
+                app:tint="?attr/colorOnPrimary" />
+
+            <TextView
+                android:id="@+id/tvTime_track"
+                style="@style/TextNameArtistAndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="4:01" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+
 
     <ImageView
         android:id="@+id/ivIcon"
