@@ -5,15 +5,8 @@ import com.google.gson.Gson
 import kotlin.system.exitProcess
 
 
-
-// при чтении  sharedPreferences работаем с массивом, при записи с ArrayLis
-//
-// t
-
 class SearchHistory(private val sharedPreferences: SharedPreferences) {
 
-//    private val historyTrackList = read()
-//    private var trackCount = historyTrackList.size
     private var searchHistoryTrackList: MutableList<Track> = mutableListOf()
 
 
@@ -22,20 +15,18 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
         // читаем данные по ключу, если данных нет - ворачиваем null, делаем Элвис если null, то
         // вернуть пустой массив
         return Gson().fromJson(
-            sharedPreferences.getString(HISTORY_TRACK_KEY, null) ?: return emptyArray<Track>(),
+            sharedPreferences.getString(HISTORY_TRACK_KEY, null) ?: return emptyArray(),
             Array<Track>::class.java
         )
-
     }
 
     // запись в SharedPreferences
-    private fun write(track: Track) {
-        // чтобы записать нужно получить возможно сущ-ий лист
+    fun write(track: Track) {
         searchHistoryTrackList = read().toMutableList()
-//        проверить условия по добавлению дубли по ID
-//        если есть ID в списке, удаляю существующий и новый ставлю в начало списка
-//        если треков больше 10, удалить последний трек
-//        после добвления трека, сначала добавляю трек потом считаю сколько треков в листе, и если их болше 10 удалялю последний
+        /*если есть ID в списке, удаляю существующий и новый ставлю в начало списка
+        если треков больше 10, удалить последний трек
+        после добвления трека, сначала добавляю трек потом считаю сколько треков в листе, и если их
+        больше 10 удалялю последний */
         if (searchHistoryTrackList.contains(track)) {
             searchHistoryTrackList.remove(track)
         }
@@ -50,19 +41,10 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
             .apply()
     }
 
-    private fun clear() { // очищаем файл
-        searchHistoryTrackList.clear()
+    fun clear() { // очищаем файл
         sharedPreferences.edit()
             .clear()
             .apply()
-    }
-
-    private fun createJsonFromTrackList(tracks: List<Track>): String {
-        return Gson().toJson(tracks)
-    }
-
-    private fun createTracksFromJson(json: String): Array<Track> {
-        return Gson().fromJson(json, Array<Track>::class.java)
     }
 
 }

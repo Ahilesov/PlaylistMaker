@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.R
 
-class TrackAdapter(private val listTrack: List<Track>, val clickListener: LocationClickListener?) :
+class TrackAdapter(val clickListener: LocationClickListener?) :
     RecyclerView.Adapter<TrackViewHolder>() {
+
+    var listTrack: List<Track> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
 
         return TrackViewHolder(parent)
