@@ -149,7 +149,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/frame_28dp"
+            android:layout_marginTop="@dimen/frame_42dp"
             android:fontFamily="@font/yandex_sans_text_medium"
             android:text="@string/you_were_looking_for"
             android:textAlignment="center"
@@ -160,7 +160,7 @@
             android:id="@+id/rvHistory"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/frame_8dp"
+            android:layout_marginTop="@dimen/frame_20dp"
             android:layout_weight="1"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -168,15 +168,12 @@
 
         <Button
             android:id="@+id/clearHistoryButton"
+            style="@style/ButtonClearHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/frame_8dp"
-            android:backgroundTint="?attr/colorSecondary"
-            android:fontFamily="@font/yandex_sans_text_medium"
-            android:text="@string/сlear_history"
-            android:textColor="?attr/colorPrimaryVariant"
-            android:textSize="@dimen/text_14sp" />
+            android:text="@string/сlear_history" />
 
     </LinearLayout>
 

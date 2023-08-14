@@ -9,15 +9,17 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
 
     private var searchHistoryTrackList: MutableList<Track> = mutableListOf()
 
-
     // чтение SharedPreferences
     fun read(): Array<Track> {
         // читаем данные по ключу, если данных нет - ворачиваем null, делаем Элвис если null, то
         // вернуть пустой массив
-        return Gson().fromJson(
-            sharedPreferences.getString(HISTORY_TRACK_KEY, null) ?: return emptyArray(),
-            Array<Track>::class.java
-        )
+//        return Gson().fromJson(
+//            sharedPreferences.getString(HISTORY_TRACK_KEY, null) ?: return emptyArray(),
+//            Array<Track>::class.java
+//        )
+        return sharedPreferences.getString(HISTORY_TRACK_KEY, null)?.let {
+            Gson().fromJson(it, Array<Track>::class.java)
+        } ?: emptyArray()
     }
 
     // запись в SharedPreferences

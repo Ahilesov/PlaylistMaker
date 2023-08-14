@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -134,13 +135,15 @@ class SearchActivity : AppCompatActivity() {
         }
         /////////
 
-        ///////// ЕСЛИ ПОСЛЕ ЧТЕНИЯ sharedPreferences НЕ ПУСТОЙ ПОКАЗЫВАЕМ ИСТОРИЮ
-        if (searchHistory.read().isNotEmpty()) {
-            llHistory.visibility = View.VISIBLE
+        /////////СЛУШАТЕЛЬ ДЛЯ ОТСЛЕЖИВАНИЯ СОСТОЯНИЯ ФОКУСА
+        inputEditText.setOnFocusChangeListener { view, hasFocus ->
+            llHistory.visibility = if (
+                hasFocus
+                && inputEditText.text.isEmpty()
+                && readTrackHistoryList().isNotEmpty()
+            ) View.VISIBLE else View.GONE
         }
-        /////////
 
-        /////////
         val simpleTextWatcher = object : TextWatcher { // ввод текста в строку поиска
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // реализация позже
@@ -149,7 +152,7 @@ class SearchActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 ivClearButton.visibility = clearButtonVisibility(s)
                 llHistory.visibility =
-                    if (inputEditText.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
+                    if (inputEditText.hasFocus() && s!!.isEmpty()) View.VISIBLE else View.GONE
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -169,16 +172,20 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
-    // ФУНКЦИЯ ПОКАЗА ИСТОРИИ ЛИСТА
+    ///////// ФУНКЦИЯ ПОКАЗА ИСТОРИИ ЛИСТА
     private fun showHistoryList() {
-        // читаем файл с sharedPreferences файл истории треков и инициализируем им searchTrackList
-        searchTrackList = searchHistory.read()
-        // через переменную возвращаем List треков
-        val savedTrackList = searchTrackList.toList()
-        // инициализируем лист треков адаптера
-        searchAdapterTrack.listTrack = savedTrackList
+        // инициализируем лист треков адаптера через функцию
+        searchAdapterTrack.listTrack = readTrackHistoryList()
         // инициализируем адаптер Recycler
         rvHistory.adapter = searchAdapterTrack
+    }
+
+    ///////// ФУНКЦИЯ ЧТЕНИЯ ЛИСТА ИСТОРИИ ТРЕКОВ
+    private fun readTrackHistoryList(): List<Track> {
+        // читаем файл с sharedPreferences файл истории треков и инициализируем им searchTrackList
+        searchTrackList = searchHistory.read()
+        // возвращаем List треков
+        return searchTrackList.toList()
     }
 
     // СОХРАНЯЕМ ДАННЫЕ
