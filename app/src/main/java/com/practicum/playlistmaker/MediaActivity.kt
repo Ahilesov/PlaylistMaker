@@ -12,7 +12,6 @@ class MediaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_media)
 
 
-
         val back = findViewById<ImageView>(R.id.ivBack)
 
         back.setOnClickListener {
