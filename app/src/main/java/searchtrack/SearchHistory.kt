@@ -2,6 +2,7 @@ package searchtrack
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.practicum.playlistmaker.Constants
 import kotlin.system.exitProcess
 
 
@@ -17,7 +18,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
 //            sharedPreferences.getString(HISTORY_TRACK_KEY, null) ?: return emptyArray(),
 //            Array<Track>::class.java
 //        )
-        return sharedPreferences.getString(HISTORY_TRACK_KEY, null)?.let {
+        return sharedPreferences.getString(Constants.HISTORY_TRACK_KEY, null)?.let {
             Gson().fromJson(it, Array<Track>::class.java)
         } ?: emptyArray()
     }
@@ -39,7 +40,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
         }
 
         sharedPreferences.edit()
-            .putString(HISTORY_TRACK_KEY, Gson().toJson(searchHistoryTrackList))
+            .putString(Constants.HISTORY_TRACK_KEY, Gson().toJson(searchHistoryTrackList))
             .apply()
     }
 

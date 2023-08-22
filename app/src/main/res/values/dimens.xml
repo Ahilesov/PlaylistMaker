@@ -13,12 +13,15 @@
     <dimen name="frame_20dp">20dp</dimen>
     <dimen name="frame_24dp">24dp</dimen>
     <dimen name="frame_28dp">28dp</dimen>
+    <dimen name="frame_29dp">29dp</dimen>
+    <dimen name="frame_30dp">30dp</dimen>
     <dimen name="frame_34dp">34dp</dimen>
     <dimen name="frame_35dp">35dp</dimen>
     <dimen name="frame_36dp">36dp</dimen>
     <dimen name="frame_40dp">40dp</dimen>
     <dimen name="frame_42dp">42dp</dimen>
     <dimen name="frame_44dp">44dp</dimen>
+    <dimen name="frame_46dp">46dp</dimen>
     <dimen name="frame_54dp">54dp</dimen>
     <dimen name="frame_62dp">62dp</dimen>
     <dimen name="frame_66dp">66dp</dimen>
@@ -26,6 +29,7 @@
     <dimen name="text_22sp">22sp</dimen>
     <dimen name="text_16sp">16sp</dimen>
     <dimen name="text_11sp">11sp</dimen>
+    <dimen name="text_13sp">13sp</dimen>
     <dimen name="text_19sp">19sp</dimen>
     <dimen name="text_14sp">14sp</dimen>
 

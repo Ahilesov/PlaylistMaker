@@ -100,6 +100,18 @@
         <item name="android:textColor">?attr/colorPrimaryVariant</item>
         <item name="android:textSize">@dimen/text_14sp</item>
     </style>
+    
+    <style name="attributesTrackText">
+        <item name="android:fontFamily">@font/yandex_sans_text_regular</item>
+        <item name="android:textSize">@dimen/text_13sp</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+    
+    <style name="TextArtistNameAndCountdown">
+        <item name="android:fontFamily">@font/yandex_sans_text_medium</item>
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+    </style>
 
 
 </resources>

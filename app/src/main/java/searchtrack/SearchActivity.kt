@@ -1,6 +1,7 @@
 package searchtrack
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +17,8 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.practicum.playlistmaker.AudioPlayerActivity
+import com.practicum.playlistmaker.Constants
 import com.practicum.playlistmaker.R
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,34 +26,27 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
-const val HISTORY_TRACK_FILE = "history_track_file"
-const val HISTORY_TRACK_KEY = "key_for_history_track"
-
 class SearchActivity : AppCompatActivity() {
-    companion object {
-        private const val SEARCH_TEXT = "SEARCH_TEXT"
-    }
 
     private lateinit var inputEditText: EditText
     private lateinit var ivBackButton: ImageView
     private lateinit var ivClearButton: ImageView
     private lateinit var rvTrack: RecyclerView
-    private lateinit var rvHistory: RecyclerView // new
+    private lateinit var rvHistory: RecyclerView
     private lateinit var llErrorNothingWasFound: LinearLayout
     private lateinit var llEerrorConnection: LinearLayout
     private lateinit var butRefresh: Button
-    private lateinit var butClearHistory: Button // new
+    private lateinit var butClearHistory: Button
     private lateinit var adapterTrack: TrackAdapter
-    private lateinit var searchAdapterTrack: TrackAdapter // new
+    private lateinit var searchAdapterTrack: TrackAdapter
     private val trackList = ArrayList<Track>()
-    private lateinit var searchTrackList: Array<Track> // new
-    private lateinit var llHistory: LinearLayout // new
-    private lateinit var sharedPreferences: SharedPreferences // new
-    private lateinit var searchHistory: SearchHistory // new
+    private lateinit var searchTrackList: Array<Track>
+    private lateinit var llHistory: LinearLayout
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var searchHistory: SearchHistory
 
     /////////
-    private val iTunesBaseUrl = "https://itunes.apple.com"
+    private val iTunesBaseUrl = Constants.ITUNES_BASE_URL
     private val retrofit = Retrofit.Builder()
         .baseUrl(iTunesBaseUrl)
         .addConverterFactory(GsonConverterFactory.create())
@@ -66,23 +62,25 @@ class SearchActivity : AppCompatActivity() {
         ivBackButton = findViewById(R.id.ivBack)
         inputEditText = findViewById(R.id.inputEditText)
         ivClearButton = findViewById(R.id.ivClearIcon)
-        butClearHistory = findViewById(R.id.clearHistoryButton) // new
+        butClearHistory = findViewById(R.id.clearHistoryButton)
         rvTrack = findViewById(R.id.rvTrack)
         llErrorNothingWasFound = findViewById(R.id.llErrorNotFound)
         llEerrorConnection = findViewById(R.id.llErrorConnection)
         butRefresh = findViewById(R.id.buttonRefresh)
-        llHistory = findViewById(R.id.llHistory) // new
-        rvHistory = findViewById(R.id.rvHistory) // new
+        llHistory = findViewById(R.id.llHistory)
+        rvHistory = findViewById(R.id.rvHistory)
         adapterTrack = TrackAdapter() {
             searchHistory.write(it)
-            Toast.makeText(this, "clicked", Toast.LENGTH_LONG).show() // new
+            intentAudioPlayer(it)
         }
-        searchAdapterTrack = TrackAdapter() {} // new
+        searchAdapterTrack = TrackAdapter() {
+            intentAudioPlayer(it)
+        }
         /////////
 
         ///////// СОЗДАНИЕ ЭКЗЕМПЛЯРА sharedPreferences
         // создаем экземпляр sharedPreferences
-        sharedPreferences = getSharedPreferences(HISTORY_TRACK_FILE, MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(Constants.HISTORY_TRACK_FILE, MODE_PRIVATE)
         // создаем экземпляр searchHistory
         searchHistory = SearchHistory(sharedPreferences)
         /////////
@@ -172,6 +170,13 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
+    ///////// ФУНКЦИЯ ЯВНОГО Intent С ПЕРЕДАЧЕЙ ОБЪЕКТА Track
+    private fun intentAudioPlayer(track: Track) {
+        val displayIntent = Intent(this, AudioPlayerActivity::class.java)
+        displayIntent.putExtra(Constants.TRACK, track)
+        startActivity(displayIntent)
+    }
+
     ///////// ФУНКЦИЯ ПОКАЗА ИСТОРИИ ЛИСТА
     private fun showHistoryList() {
         // инициализируем лист треков адаптера через функцию
@@ -192,13 +197,13 @@ class SearchActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val searchText = inputEditText.text.toString()
-        outState.putString(SEARCH_TEXT, searchText)
+        outState.putString(Constants.SEARCH_TEXT, searchText)
     }
 
     // ПОКАЗЫВАЕМ СОЗРАНЕННЫЕ ДАННЫЕ
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val searchText = savedInstanceState.getString(SEARCH_TEXT)
+        val searchText = savedInstanceState.getString(Constants.SEARCH_TEXT)
         inputEditText.setText(searchText)
     }
 
