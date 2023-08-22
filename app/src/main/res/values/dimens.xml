@@ -17,6 +17,7 @@
     <dimen name="frame_35dp">35dp</dimen>
     <dimen name="frame_36dp">36dp</dimen>
     <dimen name="frame_40dp">40dp</dimen>
+    <dimen name="frame_42dp">42dp</dimen>
     <dimen name="frame_44dp">44dp</dimen>
     <dimen name="frame_54dp">54dp</dimen>
     <dimen name="frame_62dp">62dp</dimen>

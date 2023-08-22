@@ -5,10 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.R
 
-class TrackAdapter(private val listTrack: List<Track>) : RecyclerView.Adapter<TrackViewHolder>() {
+class TrackAdapter(val clickListener: LocationClickListener?) :
+    RecyclerView.Adapter<TrackViewHolder>() {
+
+    var listTrack: List<Track> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.track_item, parent, false)
-        return TrackViewHolder(view)
+
+        return TrackViewHolder(parent)
     }
 
     override fun getItemCount(): Int {
@@ -18,5 +21,10 @@ class TrackAdapter(private val listTrack: List<Track>) : RecyclerView.Adapter<Tr
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.bind(listTrack[position])
+        holder.itemView.setOnClickListener { clickListener?.onLocationClick(listTrack[position])}
+    }
+
+    fun interface LocationClickListener {
+        fun onLocationClick(track: Track)
     }
 }

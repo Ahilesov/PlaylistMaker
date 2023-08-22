@@ -1,7 +1,9 @@
 package searchtrack
 
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +13,9 @@ import com.practicum.playlistmaker.R
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
+    LayoutInflater.from(parentView.context).inflate(R.layout.track_item, parentView, false)
+) {
 
 
     private val trackName: TextView = itemView.findViewById(R.id.tvName_track)
