@@ -104,7 +104,7 @@
     <style name="attributesTrackText">
         <item name="android:fontFamily">@font/yandex_sans_text_regular</item>
         <item name="android:textSize">@dimen/text_13sp</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColor">@color/grey_icons</item>
     </style>
     
     <style name="TextArtistNameAndCountdown">

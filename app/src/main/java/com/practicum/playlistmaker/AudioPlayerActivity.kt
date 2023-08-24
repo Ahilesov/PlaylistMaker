@@ -55,7 +55,7 @@ class AudioPlayerActivity: AppCompatActivity() {
                 tvAlbum.visibility = View.GONE
             }).toString() else track.collectionName
 
-        tvYearName.text = track.releaseDate.subSequence(0, 4)
+        tvYearName.text = track.releaseDate.substring(0, 4)
         tvGenreName.text = track.primaryGenreName
         tvCountryName.text = track.country
 

@@ -19,7 +19,7 @@
     <string name="genre_track">Жанр</string>
     <string name="year_track">Год</string>
     <string name="album_track">Альбом</string>
-    <string name="duraition_track">Длительность</string>
+    <string name="duration_track">Длительность</string>
 
 
 </resources>

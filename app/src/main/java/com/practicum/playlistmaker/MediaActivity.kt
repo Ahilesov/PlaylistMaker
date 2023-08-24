@@ -11,15 +11,11 @@ class MediaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_media)
 
-
-
         val back = findViewById<ImageView>(R.id.ivBack)
 
         back.setOnClickListener {
             finish()
         }
-
-
 
     }
 }
