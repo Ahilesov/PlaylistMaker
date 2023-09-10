@@ -17,13 +17,10 @@ class SettingsActivity : AppCompatActivity() {
 
         val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
         themeSwitcher.isChecked = (applicationContext as App).darkTheme
-        val sharedPrefs = getSharedPreferences(DARK_THEME_SETTINGS, MODE_PRIVATE)
+
 
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
             (applicationContext as App).switchTheme(checked)
-            sharedPrefs.edit()
-                .putBoolean(DARK_THEME_KEY, checked)
-                .apply()
         }
 
         val backButton = findViewById<ImageView>(R.id.ivBack)

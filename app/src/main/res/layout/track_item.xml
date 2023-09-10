@@ -9,7 +9,7 @@
     app:cardElevation="@dimen/frame_0dp">
 
     <ImageView
-        android:id="@+id/ivPicture_artist"
+        android:id="@+id/ivPictureArtist"
         android:layout_width="@dimen/frame_44dp"
         android:layout_height="@dimen/frame_44dp"
         android:layout_gravity="center_vertical"
@@ -24,7 +24,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvName_track"
+            android:id="@+id/tvNameTrack"
             style="@style/TextNameTrack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:layout_marginTop="1dp">
 
             <TextView
-                android:id="@+id/tvName_artist"
+                android:id="@+id/tvNameArtist"
                 style="@style/TextNameArtistAndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 app:tint="?attr/colorOnPrimary" />
 
             <TextView
-                android:id="@+id/tvTime_track"
+                android:id="@+id/tvTimeTrack"
                 style="@style/TextNameArtistAndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

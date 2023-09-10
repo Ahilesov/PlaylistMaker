@@ -2,7 +2,6 @@ package searchtrack
 
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,10 +17,10 @@ class TrackViewHolder(parentView: ViewGroup) : RecyclerView.ViewHolder(
 ) {
 
 
-    private val trackName: TextView = itemView.findViewById(R.id.tvName_track)
-    private val artistName: TextView = itemView.findViewById(R.id.tvName_artist)
-    private val trackTime: TextView = itemView.findViewById(R.id.tvTime_track)
-    private val pictureArtist: ImageView = itemView.findViewById(R.id.ivPicture_artist)
+    private val trackName: TextView = itemView.findViewById(R.id.tvNameTrack)
+    private val artistName: TextView = itemView.findViewById(R.id.tvNameArtist)
+    private val trackTime: TextView = itemView.findViewById(R.id.tvTimeTrack)
+    private val pictureArtist: ImageView = itemView.findViewById(R.id.ivPictureArtist)
 
     fun bind(item: Track) {
         trackName.text = item.trackName
