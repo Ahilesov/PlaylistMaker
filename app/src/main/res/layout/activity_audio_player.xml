@@ -198,7 +198,7 @@
         app:layout_constraintTop_toBottomOf="@id/ivPlayTrack"
         app:layout_constraintEnd_toStartOf="@id/rightGuideline"
         app:layout_constraintStart_toStartOf="@id/leftGuideline"
-        tools:text="0:30" />
+        android:text="00:00" />
 
     <ImageView
         android:id="@+id/ivTrackAdd"
