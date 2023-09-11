@@ -35,6 +35,14 @@ class AudioPlayerActivity : AppCompatActivity() {
     private var playerState = Constants.STATE_DEFAULT_PLAYER
     private var mediaPlayer = MediaPlayer()
     private lateinit var handler: Handler
+    private val runnable = object : Runnable {
+        override fun run() {
+            tvCountdown.text =
+                SimpleDateFormat("mm:ss", Locale.getDefault())
+                    .format(mediaPlayer.currentPosition)
+            handler.postDelayed(this, Constants.TRACK_TIMER_DEBOUNCE_DELAY)
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,15 +106,6 @@ class AudioPlayerActivity : AppCompatActivity() {
         )
 
         else -> @Suppress("DEPRECATION") getSerializableExtra(key) as? T
-    }
-
-    private val runnable = object : Runnable {
-        override fun run() {
-            tvCountdown.text =
-                android.icu.text.SimpleDateFormat("mm:ss", Locale.getDefault())
-                    .format(mediaPlayer.currentPosition)
-            handler.postDelayed(this, Constants.TRACK_TIMER_DEBOUNCE_DELAY)
-        }
     }
 
     private fun preparePlayer(url: String) {
