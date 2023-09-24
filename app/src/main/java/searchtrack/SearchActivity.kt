@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,6 +17,7 @@ import android.widget.ImageView
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.AudioPlayerActivity
@@ -44,6 +47,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var llHistory: LinearLayout
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var searchHistory: SearchHistory
+    private lateinit var progressBar: ProgressBar
 
     /////////
     private val iTunesBaseUrl = Constants.ITUNES_BASE_URL
@@ -52,7 +56,17 @@ class SearchActivity : AppCompatActivity() {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
     private val iTunesService = retrofit.create(TrackApi::class.java)
+
+
+    // переменная для минимизации рисков открытия нескольких аудиоплееров одновременно
+    private var isClickAllowed = true
+
+    // создание экземпляря Handler главного потока
+    private val handler = Handler(Looper.getMainLooper())
+
+    private val searchRunnable = Runnable { search() }
     /////////
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,10 +83,15 @@ class SearchActivity : AppCompatActivity() {
         butRefresh = findViewById(R.id.buttonRefresh)
         llHistory = findViewById(R.id.llHistory)
         rvHistory = findViewById(R.id.rvHistory)
+        progressBar = findViewById(R.id.progressBar)
+
+        // инициализация адптера поиска с добавление трека в историю и открытием активити плеера
         adapterTrack = TrackAdapter() {
             searchHistory.write(it)
             intentAudioPlayer(it)
         }
+
+        // инициализация адптера истории с открытием активити плеера
         searchAdapterTrack = TrackAdapter() {
             intentAudioPlayer(it)
         }
@@ -81,7 +100,7 @@ class SearchActivity : AppCompatActivity() {
         ///////// СОЗДАНИЕ ЭКЗЕМПЛЯРА sharedPreferences
         // создаем экземпляр sharedPreferences
         sharedPreferences = getSharedPreferences(Constants.HISTORY_TRACK_FILE, MODE_PRIVATE)
-        // создаем экземпляр searchHistory
+        // создаем экземпляр SearchHistory
         searchHistory = SearchHistory(sharedPreferences)
         /////////
 
@@ -99,6 +118,7 @@ class SearchActivity : AppCompatActivity() {
             trackList.clear()
             adapterTrack.notifyDataSetChanged()
 
+            // ВЫЗЫВАЕМ ФУНКЦИЯ ПОКАЗА ИСТОРИИ ЛИСТА
             showHistoryList()
             searchAdapterTrack.notifyDataSetChanged()
             if (searchTrackList.isEmpty()) {
@@ -123,16 +143,6 @@ class SearchActivity : AppCompatActivity() {
         }
         /////////
 
-        ///////// СЛУШАТЕЛЬ НА КНОПКУ ENTER  НА КЛАВИАТУРЕ
-        inputEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                search()
-                true
-            }
-            false
-        }
-        /////////
-
         /////////СЛУШАТЕЛЬ ДЛЯ ОТСЛЕЖИВАНИЯ СОСТОЯНИЯ ФОКУСА
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
             llHistory.visibility = if (
@@ -142,7 +152,7 @@ class SearchActivity : AppCompatActivity() {
             ) View.VISIBLE else View.GONE
         }
 
-        val simpleTextWatcher = object : TextWatcher { // ввод текста в строку поиска
+        inputEditText.addTextChangedListener(object : TextWatcher { // ввод текста в строку поиска
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // реализация позже
             }
@@ -151,30 +161,45 @@ class SearchActivity : AppCompatActivity() {
                 ivClearButton.visibility = clearButtonVisibility(s)
                 llHistory.visibility =
                     if (inputEditText.hasFocus() && s!!.isEmpty()) View.VISIBLE else View.GONE
+                searchDebounce()
             }
 
             override fun afterTextChanged(s: Editable?) {
                 // реализация позже
             }
-        }
-
-        inputEditText.addTextChangedListener(simpleTextWatcher)
-        /////////
+        })
 
         ///////// ИНИЦИАЛИЗИРУЕМ listTrack АДАПТЕРА ТРЕКОВ И ПОМЕЩАЕМ В Recycler ТРЕКОВ ЭТОТ ЛИСТ
         adapterTrack.listTrack = trackList
         rvTrack.adapter = adapterTrack
 
+        ///////// ВЫЗЫВАЕМ ФУНКЦИЯ ПОКАЗА ИСТОРИИ ЛИСТА
         showHistoryList()
-        /////////
-
     }
 
-    ///////// ФУНКЦИЯ ЯВНОГО Intent С ПЕРЕДАЧЕЙ ОБЪЕКТА Track
+    ///////// ФУНКЦИЯ удаляет запланированный вызов Runnable и запуск его же через 2 сек
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, Constants.SEARCH_DEBOUNCE_DELAY)
+    }
+
+    ///////// ФУНКЦИЯ ДЛЯ ДОСТУПА КНОПКИ ЧЕРЕЗ ЗАДЕРЖКУ Handler
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({isClickAllowed = true}, Constants.CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
+
+    ///////// ФУНКЦИЯ ЯВНОГО Intent С ПЕРЕДАЧЕЙ ОБЪЕКТА Track С ПРОВЕРКОЙ ДОСТУПНОСТИ КНОПКИ
     private fun intentAudioPlayer(track: Track) {
-        val displayIntent = Intent(this, AudioPlayerActivity::class.java)
-        displayIntent.putExtra(Constants.TRACK, track)
-        startActivity(displayIntent)
+        if (clickDebounce()) {
+            val displayIntent = Intent(this, AudioPlayerActivity::class.java)
+            displayIntent.putExtra(Constants.TRACK, track)
+            startActivity(displayIntent)
+        }
     }
 
     ///////// ФУНКЦИЯ ПОКАЗА ИСТОРИИ ЛИСТА
@@ -219,6 +244,10 @@ class SearchActivity : AppCompatActivity() {
     // ФУНКЦИЯ ПОИСКА - ЗАПРОС И ОТВЕТ СЕРВЕРА
     private fun search() {
         if (inputEditText.text.isNotEmpty()) {
+
+            rvTrack.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+
             iTunesService.search(inputEditText.text.toString())
                 .enqueue(object : Callback<TrackResponse> {
 
@@ -226,10 +255,11 @@ class SearchActivity : AppCompatActivity() {
                         call: Call<TrackResponse>,
                         response: Response<TrackResponse>
                     ) {
+                        progressBar.visibility = View.GONE
                         if (response.code() == 200) {
-
                             trackList.clear()
                             if (response.body()?.results?.isNotEmpty() == true) { // лист results не пустой или можно isSuccessful
+
                                 trackList.addAll(response.body()?.results!!)
                                 adapterTrack.notifyDataSetChanged()
                                 rvTrack.visibility = View.VISIBLE
