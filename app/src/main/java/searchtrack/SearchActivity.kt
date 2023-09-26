@@ -9,9 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.view.inputmethod.InputMethodManager
@@ -20,7 +18,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlistmaker.AudioPlayerActivity
+import com.practicum.playlistmaker.player.ui.PlayerActivity
 import com.practicum.playlistmaker.Constants
 import com.practicum.playlistmaker.R
 import retrofit2.Call
@@ -196,7 +194,7 @@ class SearchActivity : AppCompatActivity() {
     ///////// ФУНКЦИЯ ЯВНОГО Intent С ПЕРЕДАЧЕЙ ОБЪЕКТА Track С ПРОВЕРКОЙ ДОСТУПНОСТИ КНОПКИ
     private fun intentAudioPlayer(track: Track) {
         if (clickDebounce()) {
-            val displayIntent = Intent(this, AudioPlayerActivity::class.java)
+            val displayIntent = Intent(this, PlayerActivity::class.java)
             displayIntent.putExtra(Constants.TRACK, track)
             startActivity(displayIntent)
         }
