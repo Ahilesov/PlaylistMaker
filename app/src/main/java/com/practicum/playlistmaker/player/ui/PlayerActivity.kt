@@ -15,7 +15,7 @@ import com.practicum.playlistmaker.Constants
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.player.creator.Creator
 import com.practicum.playlistmaker.player.domain.models.PlayerState
-import searchtrack.Track
+import com.practicum.playlistmaker.Track
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -35,7 +35,7 @@ class PlayerActivity : AppCompatActivity() {
     private val tvCountryName: TextView by lazy { findViewById(R.id.tvCountryName) }
     private val ivPlayTrack: ImageView by lazy { findViewById(R.id.ivPlayTrack) }
 
-    private val getPlayerInteractorImpl = Creator.provideGetPlayerInteractorImpl()
+    private val getPlayerInteractorImpl = Creator.provideGetPlayerInteractor()
 
     private lateinit var handler: Handler
     private val runnable = object : Runnable {

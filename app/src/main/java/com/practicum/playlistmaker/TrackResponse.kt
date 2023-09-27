@@ -1,6 +1,4 @@
-package searchtrack
-
-import searchtrack.Track
+package com.practicum.playlistmaker
 
 class TrackResponse (
     val resultCount: Int,

@@ -1,4 +1,4 @@
-package searchtrack
+package com.practicum.playlistmaker
 
 import android.content.Context
 import android.content.Intent
@@ -19,8 +19,6 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.player.ui.PlayerActivity
-import com.practicum.playlistmaker.Constants
-import com.practicum.playlistmaker.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -296,6 +294,8 @@ class SearchActivity : AppCompatActivity() {
         if (text.isNotEmpty()) {
             rvTrack.visibility = View.GONE
             llErrorNothingWasFound.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            llEerrorConnection.visibility = View.GONE
             trackList.clear()
             adapterTrack.notifyDataSetChanged()
             if (additionalMessage.isNotEmpty()) {
@@ -312,6 +312,8 @@ class SearchActivity : AppCompatActivity() {
         if (text.isNotEmpty()) {
             rvTrack.visibility = View.GONE
             llEerrorConnection.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            llErrorNothingWasFound.visibility = View.GONE
             trackList.clear()
             adapterTrack.notifyDataSetChanged()
             if (additionalMessage.isNotEmpty()) {

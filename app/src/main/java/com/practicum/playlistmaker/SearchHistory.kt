@@ -1,9 +1,7 @@
-package searchtrack
+package com.practicum.playlistmaker
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.practicum.playlistmaker.Constants
-import kotlin.system.exitProcess
 
 
 class SearchHistory(private val sharedPreferences: SharedPreferences) {

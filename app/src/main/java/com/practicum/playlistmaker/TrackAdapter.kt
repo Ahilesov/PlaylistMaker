@@ -1,9 +1,7 @@
-package searchtrack
+package com.practicum.playlistmaker
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlistmaker.R
 
 class TrackAdapter(val clickListener: LocationClickListener?) :
     RecyclerView.Adapter<TrackViewHolder>() {
