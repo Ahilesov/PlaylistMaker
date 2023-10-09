@@ -1,4 +1,4 @@
-package searchtrack
+package com.practicum.playlistmaker
 
 import java.io.Serializable
 

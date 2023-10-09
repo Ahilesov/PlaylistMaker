@@ -1,4 +1,4 @@
-package searchtrack
+package com.practicum.playlistmaker
 
 import android.content.Context
 import android.content.Intent
@@ -9,9 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.view.inputmethod.InputMethodManager
@@ -20,9 +18,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlistmaker.AudioPlayerActivity
-import com.practicum.playlistmaker.Constants
-import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.player.ui.PlayerActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -196,7 +192,7 @@ class SearchActivity : AppCompatActivity() {
     ///////// ФУНКЦИЯ ЯВНОГО Intent С ПЕРЕДАЧЕЙ ОБЪЕКТА Track С ПРОВЕРКОЙ ДОСТУПНОСТИ КНОПКИ
     private fun intentAudioPlayer(track: Track) {
         if (clickDebounce()) {
-            val displayIntent = Intent(this, AudioPlayerActivity::class.java)
+            val displayIntent = Intent(this, PlayerActivity::class.java)
             displayIntent.putExtra(Constants.TRACK, track)
             startActivity(displayIntent)
         }
@@ -298,6 +294,8 @@ class SearchActivity : AppCompatActivity() {
         if (text.isNotEmpty()) {
             rvTrack.visibility = View.GONE
             llErrorNothingWasFound.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            llEerrorConnection.visibility = View.GONE
             trackList.clear()
             adapterTrack.notifyDataSetChanged()
             if (additionalMessage.isNotEmpty()) {
@@ -314,6 +312,8 @@ class SearchActivity : AppCompatActivity() {
         if (text.isNotEmpty()) {
             rvTrack.visibility = View.GONE
             llEerrorConnection.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            llErrorNothingWasFound.visibility = View.GONE
             trackList.clear()
             adapterTrack.notifyDataSetChanged()
             if (additionalMessage.isNotEmpty()) {

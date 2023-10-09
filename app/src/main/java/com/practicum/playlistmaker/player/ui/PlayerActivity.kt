@@ -1,7 +1,6 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.player.ui
 
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,12 +11,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import searchtrack.Track
+import com.practicum.playlistmaker.Constants
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.player.creator.Creator
+import com.practicum.playlistmaker.player.domain.models.PlayerState
+import com.practicum.playlistmaker.Track
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AudioPlayerActivity : AppCompatActivity() {
+class PlayerActivity : AppCompatActivity() {
 
     private val ivBack: ImageView by lazy { findViewById(R.id.ivBack) }
     private val ivPictureArtist: ImageView by lazy { findViewById(R.id.ivPictureArtist) }
@@ -32,18 +35,17 @@ class AudioPlayerActivity : AppCompatActivity() {
     private val tvCountryName: TextView by lazy { findViewById(R.id.tvCountryName) }
     private val ivPlayTrack: ImageView by lazy { findViewById(R.id.ivPlayTrack) }
 
-    private var playerState = Constants.STATE_DEFAULT_PLAYER
-    private var mediaPlayer = MediaPlayer()
+    private val getPlayerInteractorImpl = Creator.provideGetPlayerInteractor()
+
     private lateinit var handler: Handler
     private val runnable = object : Runnable {
         override fun run() {
             tvCountdown.text =
                 SimpleDateFormat("mm:ss", Locale.getDefault())
-                    .format(mediaPlayer.currentPosition)
+                    .format(getPlayerInteractorImpl.getCurrentPosition())
             handler.postDelayed(this, Constants.TRACK_TIMER_DEBOUNCE_DELAY)
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,7 +97,7 @@ class AudioPlayerActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer.release()
+        getPlayerInteractorImpl.releasePlayer()
         handler.removeCallbacks(runnable)
     }
 
@@ -109,41 +111,42 @@ class AudioPlayerActivity : AppCompatActivity() {
     }
 
     private fun preparePlayer(url: String) {
-        mediaPlayer.setDataSource(url)
-        mediaPlayer.prepareAsync()
-        mediaPlayer.setOnPreparedListener {
-            playerState = Constants.STATE_PREPARED_PLAYER
-        }
-        mediaPlayer.setOnCompletionListener {
+        getPlayerInteractorImpl.preparePlayer(url)
+        getSetOnCompletionListener()
+    }
+
+    private fun getSetOnCompletionListener() {
+        getPlayerInteractorImpl.setTrackCompletionListener {
             ivPlayTrack.setImageResource(R.drawable.play_button)
-            playerState = Constants.STATE_PREPARED_PLAYER
             handler.removeCallbacks(runnable)
-            tvCountdown.text = "00:00"
+            tvCountdown.text = Constants.TRACK_COUNTDOWN_TEXT
         }
     }
 
     private fun startPlayer() {
-        mediaPlayer.start()
+        getPlayerInteractorImpl.startPlayer()
         ivPlayTrack.setImageResource(R.drawable.pause_button)
-        playerState = Constants.STATE_PLAYING_PLAYER
         handler.post(runnable)
     }
 
     private fun pausePlayer() {
-        mediaPlayer.pause()
+        getPlayerInteractorImpl.pausePlayer()
         ivPlayTrack.setImageResource(R.drawable.play_button)
-        playerState = Constants.STATE_PAUSED_PLAYER
         handler.removeCallbacks(runnable)
     }
 
     private fun playbackControl() {
-        when (playerState) {
-            Constants.STATE_PLAYING_PLAYER -> {
+        when (getPlayerInteractorImpl.getPlayerState()) {
+            PlayerState.PLAYING -> {
                 pausePlayer()
             }
 
-            Constants.STATE_PREPARED_PLAYER, Constants.STATE_PAUSED_PLAYER -> {
+            PlayerState.PAUSED, PlayerState.PREPARED -> {
                 startPlayer()
+            }
+            PlayerState.DEFAULT -> {
+                startPlayer()
+                getSetOnCompletionListener()
             }
         }
     }

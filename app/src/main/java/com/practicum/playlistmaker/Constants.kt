@@ -9,8 +9,5 @@ object Constants {
     const val SEARCH_DEBOUNCE_DELAY = 2000L
     const val CLICK_DEBOUNCE_DELAY = 1000L
     const val TRACK_TIMER_DEBOUNCE_DELAY = 500L
-    const val STATE_DEFAULT_PLAYER = 0
-    const val STATE_PREPARED_PLAYER = 1
-    const val STATE_PLAYING_PLAYER = 2
-    const val STATE_PAUSED_PLAYER = 3
+    const val TRACK_COUNTDOWN_TEXT = "00:00"
 }
