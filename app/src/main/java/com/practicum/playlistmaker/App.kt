@@ -4,11 +4,11 @@ import android.app.Application
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
-
-const val DARK_THEME_SETTINGS = "dark_theme_settings"
-const val DARK_THEME_KEY = "dark_theme"
-
-
+import com.practicum.playlistmaker.player.data.TrackPlayerImpl
+import com.practicum.playlistmaker.player.domain.api.PlayerInteractor
+import com.practicum.playlistmaker.player.domain.api.TrackPlayer
+import com.practicum.playlistmaker.player.domain.impl.PlayerInteractorImpl
+import com.practicum.playlistmaker.util.Constants
 
 class App : Application() {
 
@@ -19,8 +19,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        sharedPrefs = getSharedPreferences(DARK_THEME_SETTINGS, MODE_PRIVATE)
-        darkTheme = sharedPrefs.getBoolean(DARK_THEME_KEY, false)
+        sharedPrefs = getSharedPreferences(Constants.DARK_THEME_SETTINGS, MODE_PRIVATE)
+        darkTheme = sharedPrefs.getBoolean(Constants.DARK_THEME_KEY, false)
         switchTheme(darkTheme)
     }
 
@@ -35,7 +35,8 @@ class App : Application() {
         )
 
         sharedPrefs.edit()
-            .putBoolean(DARK_THEME_KEY, darkThemeEnabled)
+            .putBoolean(Constants.DARK_THEME_KEY, darkThemeEnabled)
             .apply()
     }
+
 }
