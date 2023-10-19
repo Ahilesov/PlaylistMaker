@@ -6,32 +6,30 @@ import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.practicum.playlistmaker.search.domain.api.TracksInteractor
+import com.practicum.playlistmaker.search.domain.api.SearchInteractor
 import com.practicum.playlistmaker.search.domain.models.Track
 import com.practicum.playlistmaker.util.Constants
 
 class SearchViewModel(
-    private val tracksInteractor: TracksInteractor
+    private val searchInteractor: SearchInteractor
 ) : ViewModel() {
 
     companion object {
         private val SEARCH_REQUEST_TOKEN = Any()
     }
 
+    private val historyList = ArrayList<Track>()
+
     private var _searchScreenState = MutableLiveData<SearchState>()
     var searchScreenState: LiveData<SearchState> = _searchScreenState
 
-    private var _historyList = MutableLiveData<ArrayList<Track>>()
-    var historyList: LiveData<ArrayList<Track>> = _historyList
+    init {
+        historyList.addAll(searchInteractor.readSearchHistory())
+    }
 
     private val handler = Handler(Looper.getMainLooper())
 
-    private fun renderState(state: SearchState) {
-        _searchScreenState.postValue(state)
-    }
-
     fun searchDebounce(changedText: String) {
-
         handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
         val searchRunnable = Runnable { searchRequest(changedText) }
         val postTime = SystemClock.uptimeMillis() + Constants.SEARCH_DEBOUNCE_DELAY
@@ -43,12 +41,12 @@ class SearchViewModel(
     }
 
     private fun searchRequest(newSearchText: String) {
+
         if (newSearchText.isNotEmpty()) {
-            renderState(SearchState.Loading)
+            _searchScreenState.value = SearchState.Loading
 
-            tracksInteractor.searchTracks(newSearchText, object : TracksInteractor.TracksConsumer {
+            searchInteractor.searchTracks(newSearchText, object : SearchInteractor.TracksConsumer {
                 override fun consume(foundTracks: List<Track>?, errorMessage: String?) {
-
                     val tracks = mutableListOf<Track>()
                     if (foundTracks != null) {
                         tracks.addAll(foundTracks)
@@ -56,26 +54,20 @@ class SearchViewModel(
 
                     when {
                         errorMessage != null -> {
-                            renderState(
-                                SearchState.Error(
-                                    errorMessage = errorMessage
-                                )
+                            _searchScreenState.postValue(SearchState.Error(
+                                errorMessage = errorMessage)
                             )
                         }
 
                         tracks.isEmpty() -> {
-                            renderState(
-                                SearchState.Empty(
-                                    "Ничего не нашлось"
-                                )
+                            _searchScreenState.postValue(SearchState.Empty(
+                                emptyMessage = "Ничего не нашлось")
                             )
                         }
 
                         else -> {
-                            renderState(
-                                SearchState.Content(
-                                    tracks,
-                                )
+                            _searchScreenState.postValue(SearchState.Content(
+                                tracks = tracks)
                             )
                         }
                     }
@@ -85,16 +77,30 @@ class SearchViewModel(
     }
 
     fun clearSearchHistory() {
-        tracksInteractor.clearSearchHistory()
+        historyList.clear()
+        _searchScreenState.value = SearchState.SearchHistory(historyList)
+        searchInteractor.clearSearchHistory()
     }
 
-    fun getTracksFromSearchHistory() {
-        val result = tracksInteractor.readSearchHistory()
-        _historyList.value = result
+    fun searchFocusChanged(hasFocus: Boolean, text: String) {
+        if (hasFocus && text.isEmpty()) {
+            _searchScreenState.value = SearchState.SearchHistory(historyList)
+        }
+    }
+
+    fun clearSearchLine() {
+        _searchScreenState.value = SearchState.SearchHistory(historyList)
     }
 
     fun addTrackToSearchHistory(track: Track) {
-        tracksInteractor.addTrackToSearchHistory(track)
+        if (historyList.contains(track)) {
+            historyList.remove(track)
+        }
+        historyList.add(0, track)
+        if (historyList.size > Constants.MAX_HISTORY_SIZE) {
+            historyList.removeLast()
+        }
+        searchInteractor.saveHistory(historyList)
     }
 
     override fun onCleared() {

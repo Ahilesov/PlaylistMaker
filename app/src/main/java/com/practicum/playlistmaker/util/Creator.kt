@@ -6,12 +6,12 @@ import com.practicum.playlistmaker.player.data.TrackPlayerImpl
 import com.practicum.playlistmaker.player.domain.api.PlayerInteractor
 import com.practicum.playlistmaker.player.domain.api.TrackPlayer
 import com.practicum.playlistmaker.player.domain.impl.PlayerInteractorImpl
-import com.practicum.playlistmaker.search.data.impl.TracksRepositoryImpl
+import com.practicum.playlistmaker.search.data.impl.SearchRepositoryImpl
 import com.practicum.playlistmaker.search.data.network.RetrofitNetworkClient
 import com.practicum.playlistmaker.search.data.storage.SharedPrefsTracksHistoryStorage
-import com.practicum.playlistmaker.search.domain.api.TracksInteractor
-import com.practicum.playlistmaker.search.domain.api.TracksRepository
-import com.practicum.playlistmaker.search.domain.impl.TracksInteractorImpl
+import com.practicum.playlistmaker.search.domain.api.SearchInteractor
+import com.practicum.playlistmaker.search.domain.api.SearchRepository
+import com.practicum.playlistmaker.search.domain.impl.SearchInteractorImpl
 import com.practicum.playlistmaker.settings.data.SettingsThemeStorage
 import com.practicum.playlistmaker.settings.data.impl.SettingsRepositoryImpl
 import com.practicum.playlistmaker.settings.data.storage.SharedPrefsSettingsThemeStorage
@@ -33,16 +33,16 @@ object Creator {
         return PlayerInteractorImpl(provideTrackPlayer())
     }
 
-    private fun getTracksRepository(context: Context): TracksRepository {
-        return TracksRepositoryImpl(
+    private fun getTracksRepository(context: Context): SearchRepository {
+        return SearchRepositoryImpl(
             RetrofitNetworkClient(context),
             SharedPrefsTracksHistoryStorage(
                 context.getSharedPreferences(Constants.HISTORY_TRACK_FILE, Context.MODE_PRIVATE))
         )
     }
 
-    fun provideTracksInteractor(context: Context): TracksInteractor {
-        return TracksInteractorImpl(getTracksRepository(context))
+    fun provideTracksInteractor(context: Context): SearchInteractor {
+        return SearchInteractorImpl(getTracksRepository(context))
     }
 
     private fun getExternalNavigator(context: Context): ExternalNavigator {

@@ -16,5 +16,5 @@ object Constants {
     const val TERM_LINK = "https://yandex.ru/legal/practicum_offer"
     const val DARK_THEME_SETTINGS = "dark_theme_settings"
     const val DARK_THEME_KEY = "dark_theme"
-
+    const val MAX_HISTORY_SIZE = 10
 }

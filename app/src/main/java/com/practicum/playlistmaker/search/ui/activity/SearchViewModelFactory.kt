@@ -8,10 +8,10 @@ import com.practicum.playlistmaker.util.Creator
 
 class SearchViewModelFactory(context: Context): ViewModelProvider.Factory {
 
-    private val tracksInteractor = Creator.provideTracksInteractor(context = context)
+    private val searchInteractor = Creator.provideTracksInteractor(context = context)
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return SearchViewModel(
-            tracksInteractor = tracksInteractor
+            searchInteractor = searchInteractor
         ) as T
     }
 }

@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
@@ -22,16 +21,16 @@ import com.practicum.playlistmaker.search.ui.view_model.SearchStatus
 
 class SearchActivity : AppCompatActivity() {
 
-    private lateinit var adapterTrack: TrackAdapter
-    private lateinit var searchAdapterTrack: TrackAdapter
+    private lateinit var trackAdapter: TrackAdapter
+    private lateinit var trackHistoryAdapter: TrackAdapter
 
     private var isClickAllowed = true
     private val handler = Handler(Looper.getMainLooper())
 
-    private var trackHistoryList = ArrayList<Track>()
-
     private lateinit var binding: ActivitySearchBinding
     private lateinit var viewModel: SearchViewModel
+
+    private var searchText = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +40,8 @@ class SearchActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, SearchViewModelFactory(this))
             .get(SearchViewModel::class.java)
 
-        viewModel.searchScreenState.observe(this) {
-            render(it)
-        }
-
-        viewModel.historyList.observe(this) {
-            trackHistoryList = it
+        viewModel.searchScreenState.observe(this) {state ->
+            render(state)
         }
 
         setupAdapters()
@@ -54,15 +49,7 @@ class SearchActivity : AppCompatActivity() {
 
         // отслеживания состояния фокуса
         binding.inputEditText.setOnFocusChangeListener { view, hasFocus ->
-            if (hasFocus
-                && binding.inputEditText.text.isEmpty()
-                && trackHistoryList.isNotEmpty()
-            ) {
-                updateTrackHistoryList()
-                setStatus(SearchStatus.HISTORY)
-            } else {
-                setStatus(SearchStatus.ALL_GONE)
-            }
+            viewModel.searchFocusChanged(hasFocus, binding.inputEditText.text.toString())
         }
 
         binding.inputEditText.addTextChangedListener(object :
@@ -73,15 +60,12 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.ivClearIcon.visibility = clearButtonVisibility(s)
-
-                if (binding.inputEditText.hasFocus() && s!!.isEmpty()) {
-                    updateTrackHistoryList()
-                    setStatus(SearchStatus.HISTORY)
-                } else {
-                    setStatus(SearchStatus.ALL_GONE)
+                searchText = s?.toString() ?: ""
+                if (binding.inputEditText.hasFocus() && searchText.isEmpty()) {
+                    viewModel.clearSearchLine()
                 }
 
-                viewModel.searchDebounce(s?.toString() ?: "")
+                viewModel.searchDebounce(searchText)
 
             }
 
@@ -93,51 +77,47 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setupAdapters() {
         // инициализация адптера поиска с добавление трека в историю и открытием активити плеера
-        adapterTrack = TrackAdapter() {
+        trackAdapter = TrackAdapter() {
             viewModel.addTrackToSearchHistory(it)
             intentAudioPlayer(it)
         }
 
-        binding.rvTrack.adapter = adapterTrack
+        binding.rvTrack.adapter = trackAdapter
 
         // инициализация адптера истории с открытием активити плеера
-        searchAdapterTrack = TrackAdapter() {
+        trackHistoryAdapter = TrackAdapter() {
             intentAudioPlayer(it)
         }
 
-        binding.rvHistory.adapter = searchAdapterTrack
-        updateTrackHistoryList()
+        binding.rvHistory.adapter = trackHistoryAdapter
     }
 
-    private fun updateTrackHistoryList() {
-        viewModel.getTracksFromSearchHistory()
-        searchAdapterTrack.listTrack = trackHistoryList
-        searchAdapterTrack.notifyDataSetChanged()
-    }
-
-    private fun render(it: SearchState) {
-        Log.e("AAA", "status = $it")
-        when (it) {
+    private fun render(state: SearchState) {
+        when (state) {
             is SearchState.Loading -> setStatus(SearchStatus.PROGRESS)
 
             is SearchState.Content -> {
                 setStatus(SearchStatus.SUCCESS)
-                adapterTrack.listTrack.clear()
-                adapterTrack.listTrack.addAll(it.tracks)
-                adapterTrack.notifyDataSetChanged()
+                trackAdapter.setTracks(state.tracks)
+            }
+
+            is SearchState.SearchHistory -> {
+                trackHistoryAdapter.setTracks(state.tracks)
+                if(state.tracks.isNotEmpty()) {
+                    setStatus(SearchStatus.HISTORY)
+                } else {
+                    setStatus(SearchStatus.ALL_GONE)
+                }
             }
 
             is SearchState.Empty -> {
                 setStatus(SearchStatus.EMPTY_SEARCH)
-                adapterTrack.listTrack.clear()
-                adapterTrack.notifyDataSetChanged()
             }
 
             is SearchState.Error -> {
                 setStatus(SearchStatus.CONNECTION_ERROR)
-                adapterTrack.listTrack.clear()
-                adapterTrack.notifyDataSetChanged()
             }
+
         }
     }
 
@@ -232,7 +212,6 @@ class SearchActivity : AppCompatActivity() {
         // кнопка очистить в истории поиска
         binding.clearHistoryButton.setOnClickListener {
             viewModel.clearSearchHistory()
-            setStatus(SearchStatus.ALL_GONE)
         }
 
         // кнопка крестик в строке поиска
@@ -241,11 +220,7 @@ class SearchActivity : AppCompatActivity() {
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager // прячем клавиатуру с нажатием на крестик
             inputMethodManager?.hideSoftInputFromWindow(binding.inputEditText.windowToken, 0)
-
-            updateTrackHistoryList()
-            if (trackHistoryList.isNotEmpty()) setStatus(SearchStatus.HISTORY) else setStatus(
-                SearchStatus.ALL_GONE
-            )
+            viewModel.clearSearchLine()
         }
     }
 

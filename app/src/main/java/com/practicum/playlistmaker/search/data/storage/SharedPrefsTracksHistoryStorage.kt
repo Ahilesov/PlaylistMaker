@@ -14,22 +14,11 @@ class SharedPrefsTracksHistoryStorage(private val sharedPreferences: SharedPrefe
         } ?: emptyArray()
     }
 
-    override fun add(track: Track) {
-        val searchHistoryTrackList = read().toMutableList()
-        if (searchHistoryTrackList.contains(track)) {
-            searchHistoryTrackList.remove(track)
-        }
-        searchHistoryTrackList.add(0, track)
-
-        if (searchHistoryTrackList.size > 10) {
-            searchHistoryTrackList.removeLast()
-        }
-
-        sharedPreferences.edit()
-            .putString(Constants.HISTORY_TRACK_KEY, Gson().toJson(searchHistoryTrackList))
-            .apply()
-
+    override fun saveHistory(tracks: List<Track>) {
+        val tracksJson = Gson().toJson(tracks)
+        sharedPreferences.edit().putString(Constants.HISTORY_TRACK_KEY, tracksJson).apply()
     }
+
 
     override fun clear() {
         sharedPreferences.edit()

@@ -5,14 +5,14 @@ import com.practicum.playlistmaker.search.data.NetworkClient
 import com.practicum.playlistmaker.search.data.TracksHistoryStorage
 import com.practicum.playlistmaker.search.data.dto.TracksSearchRequest
 import com.practicum.playlistmaker.search.data.dto.TracksSearchResponse
-import com.practicum.playlistmaker.search.domain.api.TracksRepository
+import com.practicum.playlistmaker.search.domain.api.SearchRepository
 import com.practicum.playlistmaker.search.domain.models.Track
 import com.practicum.playlistmaker.util.Resource
 
-class TracksRepositoryImpl(
+class SearchRepositoryImpl(
     private val networkClient: NetworkClient,
     private val tracksHistoryStorage: TracksHistoryStorage
-) : TracksRepository {
+) : SearchRepository {
     override fun searchTracks(expression: String): Resource<List<Track>> {
         val response = networkClient.doRequest(TracksSearchRequest(expression))
         return when (response.resultCode) {
@@ -47,9 +47,10 @@ class TracksRepositoryImpl(
         return tracksHistoryStorage.read().toCollection(ArrayList())
     }
 
-    override fun addTrackToSearchHistory(track: Track) {
-        tracksHistoryStorage.add(track)
+    override fun saveHistory(tracks: List<Track>) {
+        tracksHistoryStorage.saveHistory(tracks)
     }
+
 
     override fun clearSearchHistory() {
         tracksHistoryStorage.clear()

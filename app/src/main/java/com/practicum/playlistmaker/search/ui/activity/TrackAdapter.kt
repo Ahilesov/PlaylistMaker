@@ -25,4 +25,12 @@ class TrackAdapter(val clickListener: LocationClickListener?) :
     fun interface LocationClickListener {
         fun onLocationClick(track: Track)
     }
+
+    fun setTracks(tracks: List<Track>?) {
+        listTrack.clear()
+        if (tracks != null) {
+            listTrack.addAll(tracks)
+        }
+        notifyDataSetChanged()
+    }
 }
