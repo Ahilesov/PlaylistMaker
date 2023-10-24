@@ -7,9 +7,10 @@ import com.practicum.playlistmaker.player.domain.models.PlayerState
 class TrackPlayerImpl : TrackPlayer {
 
     override var playerState: PlayerState = PlayerState.DEFAULT
-    private var mediaPlayer = MediaPlayer()
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun preparePlayer(url: String) {
+        mediaPlayer = MediaPlayer()
         mediaPlayer.setDataSource(url)
         mediaPlayer.prepare()
         playerState = PlayerState.PREPARED

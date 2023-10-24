@@ -7,16 +7,14 @@ import com.practicum.playlistmaker.util.Constants
 import com.practicum.playlistmaker.search.data.NetworkClient
 import com.practicum.playlistmaker.search.data.dto.Response
 import com.practicum.playlistmaker.search.data.dto.TracksSearchRequest
+import com.practicum.playlistmaker.search.domain.models.Track
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitNetworkClient(private val context: Context): NetworkClient {
+class RetrofitNetworkClient(
+    private val context: Context,
+    private val iTunesService: TrackApi): NetworkClient {
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(Constants.ITUNES_BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-    private val iTunesService = retrofit.create(TrackApi::class.java)
     override fun doRequest(dto: Any): Response {
         if(isConnected() == false) {
             return Response().apply { resultCode= -1 }

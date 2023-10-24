@@ -46,9 +46,10 @@ class PlayerViewModel(
     }
 
     override fun onCleared() {
+        super.onCleared()
         playerInteractor.releasePlayer()
         _playState.value = false
-        super.onCleared()
+        handler.removeCallbacks(runnable)
     }
 
     fun playbackControl(url: String) {
