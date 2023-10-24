@@ -10,8 +10,8 @@ class PlayerInteractorImpl(private val trackPlayer: TrackPlayer): PlayerInteract
         trackPlayer.preparePlayer(url)
     }
 
-    override fun startPlayer() {
-        trackPlayer.startPlayer()
+    override fun startPlayer(url: String) {
+        trackPlayer.startPlayer(url)
     }
 
     override fun pausePlayer() {

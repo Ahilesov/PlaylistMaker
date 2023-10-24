@@ -15,7 +15,10 @@ class TrackPlayerImpl : TrackPlayer {
         playerState = PlayerState.PREPARED
     }
 
-    override fun startPlayer() {
+    override fun startPlayer(url: String) {
+        if (playerState == PlayerState.DEFAULT) {
+            preparePlayer(url)
+        }
         mediaPlayer.start()
         playerState = PlayerState.PLAYING
     }

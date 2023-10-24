@@ -20,6 +20,7 @@
     <string name="year_track">Год</string>
     <string name="album_track">Альбом</string>
     <string name="duration_track">Длительность</string>
+    <string name="check_your_internet_connection">Проверьте подключение к интернету</string>
 
 
 </resources>
