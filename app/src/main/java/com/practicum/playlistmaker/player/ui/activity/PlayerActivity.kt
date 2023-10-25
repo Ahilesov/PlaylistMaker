@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.practicum.playlistmaker.util.Constants
@@ -14,6 +13,7 @@ import com.practicum.playlistmaker.search.domain.models.Track
 import com.practicum.playlistmaker.databinding.ActivityAudioPlayerBinding
 import com.practicum.playlistmaker.player.ui.view_model.PlayerViewModel
 import com.practicum.playlistmaker.util.getCoverArtwork
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -21,7 +21,7 @@ import java.util.Locale
 class PlayerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAudioPlayerBinding
-    private lateinit var viewModel: PlayerViewModel
+    private val viewModel by viewModel<PlayerViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +29,6 @@ class PlayerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val track = intent.serializable<Track>(Constants.TRACK)
-
-        viewModel = ViewModelProvider(this, PlayerActivityViewModelFactory(track!!))
-            .get(PlayerViewModel::class.java)
 
         binding.ivBack.setOnClickListener {
             finish()

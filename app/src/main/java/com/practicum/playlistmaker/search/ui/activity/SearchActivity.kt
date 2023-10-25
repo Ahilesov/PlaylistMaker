@@ -10,7 +10,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.lifecycle.ViewModelProvider
 import com.practicum.playlistmaker.util.Constants
 import com.practicum.playlistmaker.databinding.ActivitySearchBinding
 import com.practicum.playlistmaker.search.domain.models.Track
@@ -18,6 +17,7 @@ import com.practicum.playlistmaker.player.ui.activity.PlayerActivity
 import com.practicum.playlistmaker.search.ui.view_model.SearchViewModel
 import com.practicum.playlistmaker.search.ui.view_model.SearchState
 import com.practicum.playlistmaker.search.ui.view_model.SearchStatus
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
 
@@ -28,7 +28,7 @@ class SearchActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
 
     private lateinit var binding: ActivitySearchBinding
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel by viewModel<SearchViewModel>()
 
     private var searchText = ""
 
@@ -36,9 +36,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this, SearchViewModelFactory(this))
-            .get(SearchViewModel::class.java)
 
         viewModel.searchScreenState.observe(this) {state ->
             render(state)

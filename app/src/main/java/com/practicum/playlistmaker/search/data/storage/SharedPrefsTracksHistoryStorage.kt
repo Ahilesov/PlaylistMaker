@@ -6,11 +6,13 @@ import com.practicum.playlistmaker.search.data.TracksHistoryStorage
 import com.practicum.playlistmaker.search.domain.models.Track
 import com.practicum.playlistmaker.util.Constants
 
-class SharedPrefsTracksHistoryStorage(private val sharedPreferences: SharedPreferences) :
+class SharedPrefsTracksHistoryStorage(
+    private val sharedPreferences: SharedPreferences,
+    private val gson: Gson) :
     TracksHistoryStorage {
     override fun read(): Array<Track> {
         return sharedPreferences.getString(Constants.HISTORY_TRACK_KEY, null)?.let {
-            Gson().fromJson(it, Array<Track>::class.java)
+            gson.fromJson(it, Array<Track>::class.java)
         } ?: emptyArray()
     }
 

@@ -1,10 +1,10 @@
 package com.practicum.playlistmaker.player.domain.impl
 
 import com.practicum.playlistmaker.player.domain.api.PlayerInteractor
-import com.practicum.playlistmaker.player.domain.api.TrackPlayer
+import com.practicum.playlistmaker.player.domain.api.PlayerRepository
 import com.practicum.playlistmaker.player.domain.models.PlayerState
 
-class PlayerInteractorImpl(private val trackPlayer: TrackPlayer): PlayerInteractor {
+class PlayerInteractorImpl(private val trackPlayer: PlayerRepository): PlayerInteractor {
 
     override fun preparePlayer(url: String) {
         trackPlayer.preparePlayer(url)
