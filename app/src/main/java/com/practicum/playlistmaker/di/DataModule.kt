@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker.di
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.util.Log
 import com.google.gson.Gson
 import com.practicum.playlistmaker.search.data.NetworkClient
@@ -20,6 +21,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val dataModule = module {
+
+    factory {
+        MediaPlayer()
+    }
 
     single<NetworkClient> {
         RetrofitNetworkClient(
